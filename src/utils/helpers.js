@@ -5,6 +5,5 @@ export const getLocalData = async key => {
 };
 
 export const setLocalData = async (key, value) => {
-  console.log("value=========+>", key, value)
   return await AsyncStorage.setItem(key, value);
 };

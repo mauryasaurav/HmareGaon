@@ -1,12 +1,13 @@
-import React from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native';
+import HeaderScreen from './HeaderScreen';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = ({navigation}) => {
+  const {user} = useSelector(state => state.auth);
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 25}}>
-        <Text>Home</Text>
-      </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <HeaderScreen navigation={navigation} />
     </SafeAreaView>
   );
 };
