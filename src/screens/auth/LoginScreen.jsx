@@ -26,15 +26,25 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
-        <Text
+      <Text
           style={{
             fontFamily: 'Roboto-Medium',
             fontSize: 28,
             fontWeight: '500',
             color: '#333',
-            marginBottom: 30,
+            textAlign: 'center',
           }}>
-          Login
+          Enter Your Mobile Number
+        </Text>
+        <Text
+          style={{
+            fontFamily: 'Roboto-Medium',
+            fontSize: 18,
+            color: '#333',
+            margin: 30,
+            textAlign: 'center',
+          }}>
+         We will send you a Confirmation Code 
         </Text>
 
         <InputField

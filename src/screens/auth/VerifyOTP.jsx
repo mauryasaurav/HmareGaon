@@ -6,8 +6,8 @@ import CustomButton from '../../components/CustomButton';
 import InputField from '../../components/InputField';
 import {verifyAuthOTP} from '../../redux/actions/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getLocalData } from '../../utils/helpers';
-
+import {getLocalData} from '../../utils/helpers';
+import {OtpInput} from 'react-native-otp-entry';
 
 const VerifyOTP = ({navigation}) => {
   const dispatch = useDispatch();
@@ -20,47 +20,62 @@ const VerifyOTP = ({navigation}) => {
     dispatch(verifyAuthOTP(credentials));
   };
 
-  console.log("user", user)
+  console.log('user', user);
   if (!!user) {
     navigation.navigate('Home');
   }
 
+  const handleResendOTP = () => {};
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 25}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text
           style={{
             fontFamily: 'Roboto-Medium',
             fontSize: 28,
             fontWeight: '500',
             color: '#333',
-            marginBottom: 30,
+            textAlign: 'center',
           }}>
-          Verify OTP
+          Enter Verification Code
         </Text>
-
-        <InputField
-          label={'Phone Number'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          keyboardType="number"
+        <Text
+          style={{
+            fontFamily: 'Roboto-Medium',
+            fontSize: 18,
+            color: '#333',
+            margin: 30,
+            textAlign: 'center',
+          }}>
+          We are automatically detecting a SMS send to your mobile number
+          ********8080
+        </Text>
+        <OtpInput
+          onTextChange={text => console.log(text)}
+          onFilled={text => console.log(`OTP is ${text}`)}
+          numberOfDigits={4}
+          focusColor="blue"
+          focusStickBlinkingDuration={500}
         />
-        <CustomButton label={'Send OTP'} onPress={() => handleVerifyOTP()} />
+        <CustomButton label={'Verify OTP'} onPress={() => handleVerifyOTP()} />
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             marginBottom: 30,
           }}>
-          <Text>Want to login another other account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Login</Text>
+          <Text>Don't recieve the OTP ? </Text>
+          <TouchableOpacity onPress={() => handleResendOTP()}>
+            <Text
+              style={{
+                color: '#AD40AF',
+                fontWeight: '700',
+                textAlign: 'center',
+              }}>
+              {' '}
+              Resend OTP
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
