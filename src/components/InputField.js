@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default function InputField({
   label,
@@ -14,6 +16,7 @@ export default function InputField({
       style={{
         flexDirection: 'row',
         borderBottomColor: '#ccc',
+        color: '#666',
         borderBottomWidth: 1,
         paddingBottom: 8,
         marginBottom: 25,
@@ -23,18 +26,20 @@ export default function InputField({
         <TextInput
           placeholder={label}
           keyboardType={keyboardType}
-          style={{flex: 1, paddingVertical: 0}}
+          style={{flex: 1, paddingVertical: 0, color: '#666'}}
           secureTextEntry={true}
         />
       ) : (
         <TextInput
           placeholder={label}
           keyboardType={keyboardType}
-          style={{flex: 1, paddingVertical: 0}}
+          style={{flex: 1, paddingVertical: 0, color: '#666'}}
         />
       )}
       <TouchableOpacity onPress={fieldButtonFunction}>
-        <Text style={{color: '#AD40AF', fontWeight: '700'}}>{fieldButtonLabel}</Text>
+        <Text style={{color: '#AD40AF', fontWeight: '700'}}>
+          {fieldButtonLabel}
+        </Text>
       </TouchableOpacity>
     </View>
   );

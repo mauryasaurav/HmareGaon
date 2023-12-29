@@ -19,6 +19,9 @@ const App = () => {
     console.log('isLoggedIn', isLoggedIn);
   }, []);
 
+  if(!!userLoggedin) {
+  }
+
   return (
     <Provider store={store}>
       <NavigationContainer>

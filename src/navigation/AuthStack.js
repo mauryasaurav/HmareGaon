@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
 import VerifyOTP from '../screens/auth/VerifyOTP';
 import HomeScreen from '../screens/home/HomeScreen';
+import RegisterScreen from '../screens/auth/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +13,7 @@ const AuthStack = () => {
       screenOptions={{headerShown: false}}
       initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
       <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
