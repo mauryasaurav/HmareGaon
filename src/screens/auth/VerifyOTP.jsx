@@ -62,6 +62,7 @@ const VerifyOTP = ({navigation}) => {
     );
     toast('Resend OTP', "Resend OTP send successfully!", "success");
     setCountdown(90);
+    setOtp("")
     setResendActive(false);
   };
 
