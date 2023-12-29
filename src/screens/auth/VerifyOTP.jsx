@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,27 +6,33 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../../components/CustomButton';
-import InputField from '../../components/InputField';
 import {verifyAuthOTP} from '../../redux/actions/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getLocalData} from '../../utils/helpers';
 import {OtpInput} from 'react-native-otp-entry';
+import useToastHook from '../../components/Toast';
+import { maskSensitiveInfo } from '../../utils/helpers';
 
 const VerifyOTP = ({navigation}) => {
+  const toast = useToastHook();
   const dispatch = useDispatch();
-  const {loading, error, loginToken, user} = useSelector(state => state.auth);
+  const [otp, setOtp] = useState("");
+  const {loading, error, loginData, user} = useSelector(state => state.auth);
+
+  console.log("loginData", loginData)
   const handleVerifyOTP = async () => {
-    const credentials = {
-      otp: '1234',
-      accessToken: loginToken,
-    };
-    dispatch(verifyAuthOTP(credentials));
+    dispatch(
+      verifyAuthOTP({
+        otp: otp,
+        accessToken: loginData?.accessToken,
+      }),
+    );
   };
 
-  console.log('user', user);
+  if (!!error) {
+    toast('Verify OTP', error);
+  }
+
   if (!!user) {
     navigation.navigate('Home');
   }
@@ -55,20 +61,22 @@ const VerifyOTP = ({navigation}) => {
               margin: 30,
               textAlign: 'center',
             }}>
-            We are automatically detecting a SMS send to your mobile number
-            ********8080
+            We are automatically detecting a SMS send to your mobile number 
+            {maskSensitiveInfo(loginData?.phoneNumber)}
           </Text>
           <OtpInput
-            onTextChange={text => console.log(text)}
+            onTextChange={text => setOtp(text)}
             onFilled={text => console.log(`OTP is ${text}`)}
             numberOfDigits={4}
             focusColor="blue"
             focusStickBlinkingDuration={500}
           />
-          <View style={{ marginTop: 25}}>
+          <View style={{marginTop: 25}}>
             <CustomButton
               label={'Verify OTP'}
               onPress={() => handleVerifyOTP()}
+              loading={loading}
+              disabled={otp.length == 4 ? false : true}
             />
           </View>
           <View

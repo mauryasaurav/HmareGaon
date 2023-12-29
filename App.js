@@ -12,6 +12,7 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import {getLocalData} from './src/utils/helpers';
 import AppStack from './src/navigation/AppStack';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   const userLoggedin = useMemo(async () => {
@@ -27,6 +28,7 @@ const App = () => {
       <NavigationContainer>
         <AuthStack />
       </NavigationContainer>
+      <Toast />
     </Provider>
   );
 };

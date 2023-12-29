@@ -7,3 +7,14 @@ export const getLocalData = async key => {
 export const setLocalData = async (key, value) => {
   return await AsyncStorage.setItem(key, value);
 };
+
+export const maskSensitiveInfo = info => {
+  const lengthToShow = 4;
+  if (typeof info !== 'string') {
+    return '';
+  }
+
+  const visiblePart =
+    '*'.repeat(info.length - lengthToShow) + info.slice(-lengthToShow);
+  return " " + visiblePart;
+};

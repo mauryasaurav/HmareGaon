@@ -11,9 +11,9 @@ export const loginUser = credentials => async dispatch => {
   try {
     dispatch(loginRequest());
     const response = await loginUserAPI(credentials);
-    dispatch(loginSuccess(response.data.data.accessToken));
+    dispatch(loginSuccess(response.data.data));
   } catch (error) {
-    dispatch(loginFailure('An error occurred'));
+    dispatch(loginFailure(error));
   }
 };
 
@@ -24,6 +24,6 @@ export const verifyAuthOTP = credentials => async dispatch => {
     await setLocalData('userToken', response.data.data.accessToken);
     dispatch(verifyOTPSuccess(response.data.data));
   } catch (error) {
-    dispatch(loginFailure('An error occurred'));
+    dispatch(loginFailure(error));
   }
 };

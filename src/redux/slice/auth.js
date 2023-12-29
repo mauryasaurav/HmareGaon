@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'login_request',
   initialState: {
-    loginToken: null,
+    loginData: null,
     accessToken: null,
     user: null,
     loading: false,
@@ -16,7 +16,7 @@ const authSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.loading = false;
-      state.loginToken = action.payload;
+      state.loginData = action.payload;
     },
     verifyOTPSuccess: (state, action) => {
       state.loading = false;

@@ -12,7 +12,7 @@ SERVER.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(e.response.data.message || "Something went wrong. Please try again after some time.");
   }
 );
 
@@ -22,9 +22,9 @@ SERVER.interceptors.response.use(
   },
 
   function (e) {
-    if (e.response?.status === 401) {
-      window.location.href = "/login";
-    }
-    return Promise.reject(e);
+    // if (e.response?.status === 401) {
+    //   window.location.href = "/login";
+    // }
+    return Promise.reject(e.response?.data?.message || "Something went wrong. Please try again after some time.");
   }
 );
