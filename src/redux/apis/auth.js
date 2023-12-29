@@ -8,6 +8,11 @@ export const verifyUserOTPAPI = (data) => {
   return SERVER.post(`/auth/verifyOtp`, { ...data });
 };
 
+export const resendAPI = (data) => {
+  return SERVER.post(`/auth/resendOtp`, { ...data });
+};
+
+
 export const logoutUser = () => {
   return SERVER.post(`/logout`);
 };

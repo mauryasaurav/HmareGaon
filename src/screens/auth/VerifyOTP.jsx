@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,18 +8,35 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../../components/CustomButton';
-import {verifyAuthOTP} from '../../redux/actions/auth';
+import {resendOTP, verifyAuthOTP} from '../../redux/actions/auth';
 import {OtpInput} from 'react-native-otp-entry';
 import useToastHook from '../../components/Toast';
-import { maskSensitiveInfo } from '../../utils/helpers';
+import {maskSensitiveInfo} from '../../utils/helpers';
 
 const VerifyOTP = ({navigation}) => {
   const toast = useToastHook();
   const dispatch = useDispatch();
-  const [otp, setOtp] = useState("");
+  const [isResendActive, setResendActive] = useState(false);
+  const [countdown, setCountdown] = useState(90);
+  const [otp, setOtp] = useState('');
   const {loading, error, loginData, user} = useSelector(state => state.auth);
 
-  console.log("loginData", loginData)
+  useEffect(() => {
+    let timer;
+
+    if (countdown > 0 && !isResendActive) {
+      timer = setTimeout(() => {
+        setCountdown(prevCountdown => prevCountdown - 1);
+      }, 1000);
+    } else {
+      setResendActive(true);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [countdown, isResendActive]);
+
   const handleVerifyOTP = async () => {
     dispatch(
       verifyAuthOTP({
@@ -37,7 +54,16 @@ const VerifyOTP = ({navigation}) => {
     navigation.navigate('Home');
   }
 
-  const handleResendOTP = () => {};
+  const handleResendOTP = () => {
+    dispatch(
+      resendOTP({
+        accessToken: loginData?.accessToken,
+      }),
+    );
+    toast('Resend OTP', "Resend OTP send successfully!", "success");
+    setCountdown(90);
+    setResendActive(false);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -61,7 +87,7 @@ const VerifyOTP = ({navigation}) => {
               margin: 30,
               textAlign: 'center',
             }}>
-            We are automatically detecting a SMS send to your mobile number 
+            We are automatically detecting a SMS send to your mobile number
             {maskSensitiveInfo(loginData?.phoneNumber)}
           </Text>
           <OtpInput
@@ -71,13 +97,31 @@ const VerifyOTP = ({navigation}) => {
             focusColor="blue"
             focusStickBlinkingDuration={500}
           />
+          <Text
+            style={{
+              fontFamily: 'Roboto-Medium',
+              fontSize: 18,
+              color: '#333',
+              marginTop: 10,
+              textAlign: 'center',
+            }}>
+            {!isResendActive && `Resend in ${countdown}s`}
+          </Text>
+
           <View style={{marginTop: 25}}>
-            <CustomButton
-              label={'Verify OTP'}
-              onPress={() => handleVerifyOTP()}
-              loading={loading}
-              disabled={otp.length == 4 ? false : true}
-            />
+            {isResendActive ? (
+              <CustomButton
+                label={'Resend OTP'}
+                onPress={() => handleResendOTP()}
+              />
+            ) : (
+              <CustomButton
+                label={'Verify OTP'}
+                onPress={() => handleVerifyOTP()}
+                loading={loading}
+                disabled={otp.length == 4 ? false : true}
+              />
+            )}
           </View>
           <View
             style={{
@@ -85,15 +129,15 @@ const VerifyOTP = ({navigation}) => {
               justifyContent: 'center',
               marginBottom: 30,
             }}>
-            <Text>Don't recieve the OTP ? </Text>
-            <TouchableOpacity onPress={() => handleResendOTP()}>
+            <Text>Want to go back to login? </Text>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text
                 style={{
                   color: '#AD40AF',
                   fontWeight: '700',
                   textAlign: 'center',
                 }}>
-                Resend OTP
+                Login
               </Text>
             </TouchableOpacity>
           </View>
