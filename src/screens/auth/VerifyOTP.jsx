@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   View,
@@ -15,6 +15,7 @@ import {maskSensitiveInfo} from '../../utils/helpers';
 
 const VerifyOTP = ({navigation}) => {
   const toast = useToastHook();
+  const ref = useRef();
   const dispatch = useDispatch();
   const [isResendActive, setResendActive] = useState(false);
   const [countdown, setCountdown] = useState(90);
@@ -30,6 +31,9 @@ const VerifyOTP = ({navigation}) => {
       }, 1000);
     } else {
       setResendActive(true);
+      if (ref?.current) {
+        ref.current?.clear();
+      }
     }
 
     return () => {
@@ -37,7 +41,8 @@ const VerifyOTP = ({navigation}) => {
     };
   }, [countdown, isResendActive]);
 
-  const handleVerifyOTP = async () => {
+  const handleVerifyOTP = () => {
+    console.log(":otp", otp)
     dispatch(
       verifyAuthOTP({
         otp: otp,
@@ -60,10 +65,13 @@ const VerifyOTP = ({navigation}) => {
         accessToken: loginData?.accessToken,
       }),
     );
-    toast('Resend OTP', "Resend OTP send successfully!", "success");
+    toast('Resend OTP', 'Resend OTP send successfully!', 'success');
     setCountdown(90);
-    setOtp("")
+    setOtp('');
     setResendActive(false);
+    if (ref?.current) {
+      ref.current?.clear();
+    }
   };
 
   return (
@@ -92,8 +100,14 @@ const VerifyOTP = ({navigation}) => {
             {maskSensitiveInfo(loginData?.phoneNumber)}
           </Text>
           <OtpInput
+            ref={ref}
             onTextChange={text => setOtp(text)}
-            onFilled={text => console.log(`OTP is ${text}`)}
+            // onFilled={text => {
+            //   setOtp(text);
+            //   setTimeout(() => {
+            //     handleVerifyOTP();
+            //   }, 500);
+            // }}
             numberOfDigits={4}
             focusColor="blue"
             focusStickBlinkingDuration={500}

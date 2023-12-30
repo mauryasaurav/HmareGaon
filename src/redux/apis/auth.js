@@ -8,6 +8,10 @@ export const verifyUserOTPAPI = (data) => {
   return SERVER.post(`/auth/verifyOtp`, { ...data });
 };
 
+export const registerUserAPI = (data) => {
+  return SERVER.post(`/auth/register`, { ...data });
+};
+
 export const resendAPI = (data) => {
   return SERVER.post(`/auth/resendOtp`, { ...data });
 };

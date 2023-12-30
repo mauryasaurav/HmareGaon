@@ -9,10 +9,10 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../../components/CustomButton';
-import InputField from '../../components/InputField';
 import {loginUser} from '../../redux/actions/auth';
 import {Formik} from 'formik';
 import useToastHook from '../../components/Toast';
+import PrimaryInput from '../../components/PrimaryInput';
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -68,29 +68,26 @@ const LoginScreen = ({navigation}) => {
             onSubmit={values => handleLogin(values)}>
             {({handleChange, handleBlur, handleSubmit, values}) => (
               <View>
-                <InputField
-                  label={'Phone Number'}
+                <PrimaryInput
+                  placeholder={'Phone Number'}
+                  name="phoneNumber"
+                  keyboardType="phone-pad"
                   onChangeText={handleChange('phoneNumber')}
-                  onBlur={handleBlur('phoneNumber')}
                   value={values.phoneNumber}
+                  onBlur={handleBlur('phoneNumber')}
                   icon={
                     <MaterialIcons
                       name="phone"
                       size={20}
                       color="#666"
-                      style={{marginRight: 10}}
+                      style={{marginRight: 5}}
                     />
                   }
-                  keyboardType="number-pad"
                 />
                 <CustomButton
                   label={'Send OTP'}
                   loading={loading}
-                  disabled={
-                    [10, 11, 12, 13].includes(values.phoneNumber.length)
-                      ? false
-                      : true
-                  }
+                  disabled={values.phoneNumber.length == 10 ? false : true}
                   onPress={() => handleSubmit()}
                 />
               </View>
