@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,21 +6,21 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../../components/CustomButton';
-import {resendOTP, verifyAuthOTP} from '../../redux/actions/auth';
-import {OtpInput} from 'react-native-otp-entry';
+import { resendOTP, verifyAuthOTP } from '../../redux/actions/auth';
+import { OtpInput } from 'react-native-otp-entry';
 import useToastHook from '../../components/Toast';
-import {maskSensitiveInfo} from '../../utils/helpers';
+import { maskSensitiveInfo } from '../../utils/helpers';
 
-const VerifyOTP = ({navigation}) => {
+const VerifyOTP = ({ navigation }) => {
   const toast = useToastHook();
   const ref = useRef();
   const dispatch = useDispatch();
   const [isResendActive, setResendActive] = useState(false);
   const [countdown, setCountdown] = useState(90);
   const [otp, setOtp] = useState('');
-  const {loading, error, loginData, user} = useSelector(state => state.auth);
+  const { loading, error, loginData, user } = useSelector(state => state.auth);
 
   useEffect(() => {
     let timer;
@@ -75,9 +75,9 @@ const VerifyOTP = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 20}}>
-        <ScrollView style={{paddingHorizontal: 25}}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={{ paddingHorizontal: 20 }}>
+        <ScrollView style={{ paddingHorizontal: 25 }}>
           <Text
             style={{
               fontFamily: 'Roboto-Medium',
@@ -123,7 +123,7 @@ const VerifyOTP = ({navigation}) => {
             {!isResendActive && `Resend in ${countdown}s`}
           </Text>
 
-          <View style={{marginTop: 25}}>
+          <View style={{ marginTop: 25 }}>
             {isResendActive ? (
               <CustomButton
                 label={'Resend OTP'}

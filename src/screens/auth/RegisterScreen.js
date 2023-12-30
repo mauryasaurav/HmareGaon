@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,15 +12,15 @@ import DatePicker from 'react-native-date-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../../components/CustomButton';
-import {Formik, Field} from 'formik';
+import { Formik, Field } from 'formik';
 import GenderRadioButtons from '../../components/RadioButton';
 import PrimaryInput from '../../components/PrimaryInput';
-import {registerSchema} from '../../utils/validations';
-import {registerUser} from '../../redux/actions/auth';
-import {useDispatch, useSelector} from 'react-redux';
+import { registerSchema } from '../../utils/validations';
+import { registerUser } from '../../redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import useToastHook from '../../components/Toast';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [dobLabel, setDobLabel] = useState(
@@ -28,7 +28,7 @@ const RegisterScreen = ({navigation}) => {
   );
   const dispatch = useDispatch();
   const toast = useToastHook();
-  const {loading, error, loginData} = useSelector(state => state.auth);
+  const { loading, error, loginData } = useSelector(state => state.auth);
 
   const handleSignup = values => {
     const credentials = {
@@ -52,9 +52,9 @@ const RegisterScreen = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 20}}>
-        <ScrollView style={{paddingHorizontal: 25}}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={{ paddingHorizontal: 20 }}>
+        <ScrollView style={{ paddingHorizontal: 25 }}>
           <Text
             style={{
               fontFamily: 'Roboto-Medium',
@@ -107,7 +107,7 @@ const RegisterScreen = ({navigation}) => {
                       name="phone"
                       size={20}
                       color="#666"
-                      style={{marginRight: 5}}
+                      style={{ marginRight: 5 }}
                     />
                   }
                 />
@@ -123,7 +123,7 @@ const RegisterScreen = ({navigation}) => {
                       name="phone"
                       size={20}
                       color="#666"
-                      style={{marginRight: 5}}
+                      style={{ marginRight: 5 }}
                     />
                   }
                 />
@@ -139,7 +139,7 @@ const RegisterScreen = ({navigation}) => {
                       name="email"
                       size={20}
                       color="#666"
-                      style={{marginRight: 5}}
+                      style={{ marginRight: 5 }}
                     />
                   }
                 />
@@ -155,10 +155,10 @@ const RegisterScreen = ({navigation}) => {
                     name="calendar-outline"
                     size={20}
                     color="#666"
-                    style={{marginRight: 5}}
+                    style={{ marginRight: 5 }}
                   />
                   <TouchableOpacity onPress={() => setOpen(true)}>
-                    <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
+                    <Text style={{ color: '#666', marginLeft: 5, marginTop: 5 }}>
                       {dobLabel}
                     </Text>
                   </TouchableOpacity>
@@ -205,7 +205,7 @@ const RegisterScreen = ({navigation}) => {
             }}>
             <Text>Already registered?</Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text style={{color: '#AD40AF', fontWeight: '700'}}> Login</Text>
+              <Text style={{ color: '#AD40AF', fontWeight: '700' }}> Login</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

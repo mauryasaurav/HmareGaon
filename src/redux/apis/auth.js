@@ -16,6 +16,9 @@ export const resendAPI = (data) => {
   return SERVER.post(`/auth/resendOtp`, { ...data });
 };
 
+export const checkAuthenticationAPI = () => {
+  return SERVER.get(`/users/me`);
+};
 
 export const logoutUser = () => {
   return SERVER.post(`/logout`);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getLocalData } from "../utils/helpers";
 
 export const SERVER = axios.create({
   baseURL: "http://localhost:3000/api/v1/user",
@@ -6,11 +7,11 @@ export const SERVER = axios.create({
   credentials: "include",
 });
 
-SERVER.interceptors.request.use(
-  (config) => {
-    config.headers.access_token = "";
-    return config;
-  },
+SERVER.interceptors.request.use(async (config) => {
+  const userToken = await getLocalData("userToken")
+  config.headers.accesstoken = userToken;
+  return config;
+},
   (error) => {
     return Promise.reject(e.response.data.message || "Something went wrong. Please try again after some time.");
   }

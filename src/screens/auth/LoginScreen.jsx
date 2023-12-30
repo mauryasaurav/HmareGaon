@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,19 +7,20 @@ import {
   ScrollView,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../../components/CustomButton';
-import {loginUser} from '../../redux/actions/auth';
-import {Formik} from 'formik';
+import { loginUser } from '../../redux/actions/auth';
+import { Formik } from 'formik';
 import useToastHook from '../../components/Toast';
 import PrimaryInput from '../../components/PrimaryInput';
+import { getLocalData } from '../../utils/helpers';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const toast = useToastHook();
-  const {loading, error, loginData} = useSelector(state => state.auth);
+  const { loading, error, user, loginData } = useSelector(state => state.auth);
 
-  const handleLogin = ({phoneNumber}) => {
+  const handleLogin = ({ phoneNumber }) => {
     const credentials = {
       phoneNumber,
       lat: 28.4343,
@@ -38,9 +39,9 @@ const LoginScreen = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 20}}>
-        <ScrollView style={{paddingHorizontal: 25}}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={{ paddingHorizontal: 20 }}>
+        <ScrollView style={{ paddingHorizontal: 25 }}>
           <Text
             style={{
               fontFamily: 'Roboto-Medium',
@@ -64,9 +65,9 @@ const LoginScreen = ({navigation}) => {
           </Text>
 
           <Formik
-            initialValues={{phoneNumber: ''}}
+            initialValues={{ phoneNumber: '' }}
             onSubmit={values => handleLogin(values)}>
-            {({handleChange, handleBlur, handleSubmit, values}) => (
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View>
                 <PrimaryInput
                   placeholder={'Phone Number'}
@@ -80,7 +81,7 @@ const LoginScreen = ({navigation}) => {
                       name="phone"
                       size={20}
                       color="#666"
-                      style={{marginRight: 5}}
+                      style={{ marginRight: 5 }}
                     />
                   }
                 />
@@ -101,7 +102,7 @@ const LoginScreen = ({navigation}) => {
             }}>
             <Text>New to the app? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={{color: '#AD40AF', fontWeight: '700'}}>
+              <Text style={{ color: '#AD40AF', fontWeight: '700' }}>
                 Register
               </Text>
             </TouchableOpacity>

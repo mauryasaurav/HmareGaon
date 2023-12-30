@@ -1,4 +1,4 @@
-import {loginUserAPI, registerUserAPI, resendAPI, verifyUserOTPAPI} from '../apis/auth';
+import {checkAuthenticationAPI, loginUserAPI, registerUserAPI, resendAPI, verifyUserOTPAPI} from '../apis/auth';
 import {
   loginRequest,
   loginSuccess,
@@ -33,6 +33,17 @@ export const resendOTP = credentials => async dispatch => {
     dispatch(loginRequest());
     const response = await resendAPI(credentials);
     dispatch(loginSuccess(response.data.data));
+  } catch (error) {
+    dispatch(loginFailure(error));
+  }
+};
+
+export const checkAuthentication = credentials => async dispatch => {
+  try {
+    dispatch(loginRequest());
+    const response = await checkAuthenticationAPI(credentials);
+    console.log("response.data.data", response.data)
+    dispatch(verifyOTPSuccess(response.data.data));
   } catch (error) {
     dispatch(loginFailure(error));
   }

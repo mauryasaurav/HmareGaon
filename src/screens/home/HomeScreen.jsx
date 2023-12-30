@@ -1,13 +1,26 @@
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import HeaderScreen from './HeaderScreen';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Category from './Category';
+import ProductList from './ProductList';
+import { listProducts } from '../../redux/actions/products';
 
-const HomeScreen = ({navigation}) => {
-  const {user} = useSelector(state => state.auth);
+const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const { product: { products } } = useSelector(state => state);
+
+  useEffect(() => {
+    dispatch(
+      listProducts({ page: 1, limit: 100 }),
+    );
+  }, [])
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <HeaderScreen navigation={navigation} />
+      <Category />
+      <ProductList products={products?.products || []} />
     </SafeAreaView>
   );
 };

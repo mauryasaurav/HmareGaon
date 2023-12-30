@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,28 +9,28 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import {useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const HeaderScreen = () => {
   const navigation = useNavigation();
-  const {user} = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
   return (
-    <ScrollView style={{padding: 20}}>
+    <ScrollView style={{ padding: 20 }}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginBottom: 10,
         }}>
-        <Text style={{fontSize: 18, fontFamily: 'Roboto-Medium'}}>
+        <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium' }}>
           {user?.fullName || ''}
         </Text>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <ImageBackground
             source={require('../../assets/images/user-profile.jpg')}
-            style={{width: 35, height: 35}}
-            imageStyle={{borderRadius: 25}}
+            style={{ width: 35, height: 35 }}
+            imageStyle={{ borderRadius: 25 }}
           />
         </TouchableOpacity>
       </View>
@@ -48,7 +48,7 @@ const HeaderScreen = () => {
           name="search"
           size={20}
           color="#C6C6C6"
-          style={{marginRight: 5}}
+          style={{ marginRight: 5 }}
         />
         <TextInput placeholder="Search" />
       </View>
