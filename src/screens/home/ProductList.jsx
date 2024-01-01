@@ -46,15 +46,7 @@ const ProductList = ({ products = [] }) => {
                         });
                     }}>
                     <ProductCard
-                        id={item._id}
-                        index={item._id}
-                        type={item.type}
-                        roasted={item?.roasted || 2}
-                        imagelink_square={item.images[0]}
-                        name={item.name}
-                        special_ingredient={item?.special_ingredient | ""}
-                        average_rating={4}
-                        price={item.discountAmount}
+                        {...item}
                         buttonPressHandler={CoffeCardAddToCart}
                     />
                 </TouchableOpacity>

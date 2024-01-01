@@ -8,6 +8,7 @@ import {
     View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
     BORDERRADIUS,
     COLORS,
@@ -16,20 +17,16 @@ import {
     SPACING,
 } from '../theme/theme';
 import CustomIcon from './CustomIcon';
-import BGIcon from './BGIcon';
 
-const CARD_WIDTH = Dimensions.get('window').width * 0.32;
+const CARD_WIDTH = Dimensions.get('window').width * 0.38;
 
 const ProductCard = ({
     id,
-    index,
-    type,
-    roasted,
-    imagelink_square,
+    images,
     name,
-    special_ingredient,
-    average_rating,
-    price,
+    discountAmount,
+    originalAmount,
+    discountPercentage,
     buttonPressHandler,
 }) => {
     return (
@@ -37,45 +34,36 @@ const ProductCard = ({
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.CardLinearGradientContainer}
-            colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
+            colors={[COLORS.primaryGreyHex, COLORS.primaryWhiteHex]}>
             <ImageBackground
-                source={imagelink_square}
+                source={{ uri: images[0] }}
                 style={styles.CardImageBG}
                 resizeMode="cover">
                 <View style={styles.CardRatingContainer}>
-                    <CustomIcon
-                        name={'star'}
-                        color={COLORS.primaryOrangeHex}
-                        size={FONTSIZE.size_16}
-                    />
-                    <Text style={styles.CardRatingText}>{average_rating}</Text>
+                    <Text style={styles.CardRatingText}>{discountPercentage}% OFF</Text>
                 </View>
             </ImageBackground>
             <Text style={styles.CardTitle}>{name}</Text>
-            <Text style={styles.CardSubtitle}>{'special_ingredient'}</Text>
+            {/* <Text style={styles.CardSubtitle}>{'special_ingredient'}</Text> */}
             <View style={styles.CardFooterRow}>
                 <Text style={styles.CardPriceCurrency}>
-                    $ <Text style={styles.CardPrice}>{price.price}</Text>
+                    <Text style={styles.CardPrice}>₹{discountAmount}</Text> &nbsp;
+                    <Text style={styles.CardOriginalPrice}>₹{originalAmount}</Text>
                 </Text>
                 <TouchableOpacity
                     onPress={() => {
                         buttonPressHandler({
                             id,
-                            index,
-                            type,
-                            roasted,
-                            imagelink_square,
                             name,
-                            special_ingredient,
-                            prices: [{ ...price, quantity: 1 }],
+                            prices: [{ ...discountAmount, quantity: 1 }],
                         });
                     }}>
-                    <BGIcon
-                        color={COLORS.primaryWhiteHex}
-                        name={'add'}
-                        BGColor={COLORS.primaryOrangeHex}
-                        size={FONTSIZE.size_10}
+                    <MaterialIcons
+                        name="add"
+                        color="#666"
+                        style={styles.AddButton}
                     />
+
                 </TouchableOpacity>
             </View>
         </LinearGradient>
@@ -84,26 +72,23 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
     CardLinearGradientContainer: {
-        padding: SPACING.space_15,
-        borderRadius: BORDERRADIUS.radius_25,
+        // padding: SPACING.space_15,
+        // borderRadius: BORDERRADIUS.radius_25,
     },
     CardImageBG: {
         width: CARD_WIDTH,
         height: CARD_WIDTH,
-        borderRadius: BORDERRADIUS.radius_20,
-        marginBottom: SPACING.space_15,
+        marginBottom: SPACING.space_10,
         overflow: 'hidden',
     },
     CardRatingContainer: {
         flexDirection: 'row',
-        backgroundColor: COLORS.primaryBlackRGBA,
+        backgroundColor: COLORS.darkBlue,
         alignItems: 'center',
         justifyContent: 'center',
         gap: SPACING.space_10,
         paddingHorizontal: SPACING.space_15,
         position: 'absolute',
-        borderBottomLeftRadius: BORDERRADIUS.radius_20,
-        borderTopRightRadius: BORDERRADIUS.radius_20,
         top: 0,
         right: 0,
     },
@@ -115,12 +100,13 @@ const styles = StyleSheet.create({
     },
     CardTitle: {
         fontFamily: FONTFAMILY.poppins_medium,
-        color: COLORS.primaryWhiteHex,
+        color: COLORS.primaryBlackRGBA,
         fontSize: FONTSIZE.size_16,
+        paddingLeft: SPACING.space_10,
     },
     CardSubtitle: {
         fontFamily: FONTFAMILY.poppins_light,
-        color: COLORS.primaryWhiteHex,
+        color: COLORS.primaryBlackRGBA,
         fontSize: FONTSIZE.size_10,
     },
     CardFooterRow: {
@@ -128,15 +114,27 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: SPACING.space_15,
+        padding: SPACING.space_10,
     },
     CardPriceCurrency: {
         fontFamily: FONTFAMILY.poppins_semibold,
         color: COLORS.primaryOrangeHex,
-        fontSize: FONTSIZE.size_18,
+        fontSize: FONTSIZE.size_14,
+    },
+    AddButton: {
+        color: COLORS.primaryWhiteHex,
+        backgroundColor: COLORS.primaryOrangeHex,
+        fontSize: FONTSIZE.size_24,
+        padding: SPACING.space_2,
     },
     CardPrice: {
-        color: COLORS.primaryWhiteHex,
-    },
+        color: COLORS.primaryBlackRGBA,
+      },
+      CardOriginalPrice: {
+        color: COLORS.primaryBlackRGBA,
+        textDecorationLine: 'line-through',
+        textDecorationColor: 'black',
+      },
 });
 
 export default ProductCard;

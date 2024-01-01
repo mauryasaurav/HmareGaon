@@ -28,6 +28,7 @@ export const COLORS = {
     primaryWhiteHex: '#FFFFFF',
     primaryBlackRGBA: 'rgba(12,15,20,0.5)',
     secondaryBlackRGBA: 'rgba(0,0,0,0.7)',
+    darkBlue: '#4169e1',
 };
 
 export const FONTFAMILY = {
